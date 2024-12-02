@@ -1,0 +1,176 @@
+:root {
+    --var-color-yankeesblue : #212d40;
+    --var-color-charcoal : #364156;
+    --var-color-lapislazuli : #2978a0;
+    --var-color-deepgreencyan : #136f63;
+    --var-color-giantorgane : #f2621a;
+    --var-color-giantorganedarker : #d9510d;
+    --var-color-background : #f8f9fb;
+    --var-color-backgroundsteel : #cacdcf;
+    --var-width-sidebar: 160px;
+
+    --var-color-main-dark-blue: #003a5a;
+    --var-color-giantorganedarker: #d9510d;
+    --var-color-light-grey: #dfe1e2;
+    --var-color-misp-blue: #2ca1db;
+}
+
+
+
+html, body {
+  min-width: 300px;
+  background-color: var(--var-color-background);
+  /* background-color: #0e131b; */
+}
+
+h4 {
+    /* color: #000 */
+    /* color: var(--var-color-light-grey) */
+    color: var(--var-color-yankeesblue);
+    text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading-container {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: #ccccccaa;
+}
+
+.loading-container > span {
+    animation: spin 4s linear infinite;
+    font-size: 2.5em;
+    transform: translate(-50%,-50%);
+    color: var(--var-color-backgroundsteel)
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+
+.button-settings {
+    font-size: 0.75em;
+    border-radius: .5rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--var-color-background);
+    border: 1px solid var(--var-color-backgroundsteel);
+    cursor: pointer;
+}
+.button-settings:hover {
+    background-color: var(--var-color-main-dark-blue);
+    color: #fff;
+}
+.button-settings:active {
+    border-style: inset;
+}
+
+.mfc-user-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.mfc-user {
+    font-size: 1em;
+    font-family: monospace;
+}
+
+button.button-block {
+    border-radius: .375rem;
+    padding: 0.25rem 0.25rem;
+    color: #000;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--var-color-main-dark-blue);
+    color: #fff;
+    display: block;
+    width: 100%;
+    font-size: 1.0em;
+    transition: 0.15s;
+    font-weight: bold;
+}
+
+button.button-block:hover {
+    background-color: var(--var-color-giantorganedarker);
+    border-color: var(--var-color-giantorganedarker);
+}
+
+div#fleet-container input[type="radio"] {
+    color: var(--var-color-yankeesblue);
+}
+
+div#fleet-container input[type="radio"] ~ label {
+    display: inline-block;
+    margin-left: 0.25rem;
+}
+
+input[type="text"] {
+    width: 95%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 0.5em 0.5em;
+    border-radius: 5px;
+}
+
+input[type="text"] + label {
+    margin-bottom: 2px;
+}
+
+div.server-form-container {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    /* background-color: #eee; */
+    background-color: var(--var-color-light-grey);
+    border-color: var(--var-color-yankeesblue);
+    border-radius: 3px;
+}
+
+legend {
+    background-color: #eee;
+    border-width: 2px;
+    border-style: groove;
+    /* border-color: rgb(192, 192, 192); */
+    border-color: var(--var-color-yankeesblue);
+    font-weight: bold;
+    padding: 0.25em;
+}
+
+.error-container {
+    color: #851821;
+    background-color: #edbec2;
+    border-color: #f3b0b7;
+    position: relative;
+    padding: 1rem 1rem;
+    margin: 1rem 0 0 0;
+    border-radius: 0.25rem;
+}
+
+.error-container p:not(:nth-child(2))::before {
+    content: '•';
+    margin-right: 0.5rem;
+}
+
+.success-container {
+    color: #105938;
+    background-color: #95eac4;
+    border: 1px solid #9fd5bd;
+    position: relative;
+    padding: 1rem 1rem;
+    margin: 1rem 0 0 0;
+    border-radius: 0.25rem;
+}

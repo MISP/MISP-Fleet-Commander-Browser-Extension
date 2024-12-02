@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="misp-fleet-commander.css" />
+    <script src="misp-fleet-commander.js"></script>
+</head>
+
+<body>
+    <div id="popup-content">
+        <div class="root-container">
+            <div class="main-container">
+
+                <div style="display: flex;justify-content: space-between;align-items: center; margin-bottom: 0.5rem;">
+                    <span class="mfc-user-container">
+                        <img src="../icons/commander.png" alt="Commander icon" style="width: 1rem;">
+                        <span id="mfc-user" class="mfc-user">-</span>
+                    </span>
+                    <button id="button-settings" class="button-settings" type="button">
+                        <b style="font-size: 1.25em;">⚙</b> Settings
+                    </button>
+                </div>
+                <img src="../icons/logo.png" style="width: 100%;" alt="Application logo">
+                <div id="form-container" class="form-container">
+                    <h4>= Enroll this server in MISP Fleet Commander =</h4>
+                    <fieldset>
+                        <legend>
+                            <img src="../icons/misp.png" alt="MISP icon" style="width: 1rem;">
+                            Server to be enrolled
+                        </legend>
+                        <div class="server-form-container">
+                            <label for="server_name">Server URL:</label>
+                            <input type="text" id="server_url" name="server_url" disabled="disabled">
+                            <label for="server_name" style="margin-top: 0.5em;">Server name:</label>
+                            <input type="text" id="server_name" name="server_name" requried>
+                            <label for="server_description" style="margin-top: 0.5em;">Server description:</label>
+                            <input type="text" id="server_description" name="server_description">
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="margin-top: 1em;">
+                        <legend>
+                            <img src="../icons/fleet.png" alt="Fleet icon" style="width: 1rem;">
+                            Select the Fleet
+                        </legend>
+                        <div id="fleet-container">
+                            
+                        </div>
+                    </fieldset>
+
+                    <div style="display: flex; margin-top: 1em;">
+                        <button id="enroll-server" class="button-block" type="button">Enroll server</button>
+                    </div>
+                </div>
+
+                <div id="error-container" class="error-container hidden">
+                    <strong>There has been an error</strong>
+                    <p>Cannot use the MISP Fleet Commander extension on this web page.</p>
+                </div>
+                <div id="success-container" class="success-container hidden">
+                    <strong class="title"></strong>
+                    <p class="message" style="margin-bottom: 0;"></p>
+                </div>
+            </div>
+            <div id="loading-container" class="loading-container"><span></span></div>
+        </div>
+    </div>
+</body>
+</html>

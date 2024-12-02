@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="url">
+                MISP Fleet Commander URL
+            </label>
+            <input type="text" id="url" name="url" />
+            <label for="token">
+                MISP Fleet Commander API Token
+            </label>
+            <input type="text" id="token" name="token" />
+        </div>
+
+        <div id="status" class="alert"></div>
+        
+        <button type="submit">Save</button>
+    </form>
+    
+    <script src="settings.js"></script>
+</body>
+
+<style>
+input[type="text"] {
+    width: 95%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 0.5em 0.5em;
+    border-radius: 5px;
+}
+
+input[type="text"] + label {
+    display: block;
+    margin-top: 0.75rem;
+}
+
+button {
+    margin-top: 1rem;
+}
+
+.alert {
+    color: #105938;
+    background-color: #95eac4;
+    border: 1px solid #9fd5bd;
+    position: relative;
+    padding: 1rem 1rem;
+    margin: 1rem 0 0 0;
+    border-radius: 0.25rem;
+    display: none;
+}
+</style>
+</html>

@@ -1,0 +1,33 @@
+{
+    "manifest_version": 3,
+    "name": "MISP Fleet Commander",
+    "version": "0.1",
+    "description": "Allows to quickly register MISP instances into your MISP Fleet Commander application",
+    "homepage_url": "https://github.com/mokaddem/MISP-Fleet-Commander-Browser-Extension",
+    "icons": {
+        "48": "icons/mfc-48.png",
+        "96": "icons/mfc-96.png"
+    },
+    "permissions": ["activeTab", "notifications", "storage", "scripting", "cookies"],
+    "action": {
+        "default_icon": {
+            "32": "icons/mfc-32.png",
+            "64": "icons/mfc-64.png"
+        },
+        "default_title": "MISP Fleet Commander",
+        "default_popup": "popup/index.html"
+    },
+    "options_ui": {
+        "page": "settings/settings.html",
+        "open_in_tab": false
+    },
+    "web_accessible_resources": [{
+        "resources": ["icons/mfc-32.png"],
+        "matches": ["<all_urls>"]
+      }],      
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "misp_fleet_commander@example1.test"
+        }
+    }
+}
