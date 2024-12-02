@@ -5,6 +5,7 @@ if (typeof browser === "undefined") {
 let MISP_BASEURL = null
 let MFC_URL = null
 let token = null
+let last_selected_fleet = null
 const token_type = 'apikey'
 
 async function getCurrentTab() {
@@ -41,6 +42,7 @@ async function initContext() {
     const settings = await browser.storage.local.get();
     MFC_URL = settings.MFM_baseurl
     token = settings.MFM_token
+    last_selected_fleet = settings.last_selected_fleet
 
     MISP_BASEURL = new URL(tabs[0].url).origin
 }
@@ -102,9 +104,14 @@ async function populateImportOptions() {
             name: 'fleet_id',
             value: fleet.id,
         })
-        if (i==0) {
+        if (fleet.id == last_selected_fleet) {
             fleetIDInput.checked = true
         }
+        fleetIDInput.addEventListener('change', function() {
+            browser.storage.local.set({
+                last_selected_fleet: this.value,
+            })
+        })
         let fleetLabel = document.createElement("label")
         fleetLabel.setAttribute('for', fleet.id)
         fleetLabel.innerText = fleet.name
@@ -123,6 +130,9 @@ async function populateImportOptions() {
     serverNameInput.value = MISP_BASEURL
     const serverDescriptionInput = document.getElementById('server_description')
     serverDescriptionInput.value = 'imported via MFC plugin'
+    const mfcTextField = document.getElementById('mfc_url')
+    mfcTextField.textContent = MFC_URL
+    mfcTextField.href = MFC_URL
 }
 
 async function startImport() {

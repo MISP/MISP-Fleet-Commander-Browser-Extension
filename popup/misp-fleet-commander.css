@@ -148,6 +148,7 @@ legend {
     border-color: var(--var-color-yankeesblue);
     font-weight: bold;
     padding: 0.25em;
+    border-radius: 3px;
 }
 
 .error-container {

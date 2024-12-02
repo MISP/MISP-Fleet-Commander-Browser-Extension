@@ -41,7 +41,11 @@
     });
 
     function checkIfMISP() {
-        return document.querySelector('.footerText.footerCenterText a').innerText.startsWith('MISP')
+        const footer = document.querySelector('.footerText.footerCenterText a')
+        if (footer) {
+            return document.querySelector('.footerText.footerCenterText a').innerText.startsWith('MISP')
+        }
+        return false
     }
 
     async function createApiKey() {
