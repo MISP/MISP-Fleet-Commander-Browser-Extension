@@ -138,6 +138,7 @@ fieldset {
     background-color: var(--var-color-light-grey);
     border-color: var(--var-color-yankeesblue);
     border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 legend {
@@ -149,6 +150,8 @@ legend {
     font-weight: bold;
     padding: 0.25em;
     border-radius: 3px;
+    cursor: default;
+    user-select: none;
 }
 
 .error-container {

@@ -8,13 +8,17 @@
     <form>
         <div>
             <label for="url">
-                MISP Fleet Commander URL
+                <strong>MISP Fleet Commander URL</strong>
             </label>
             <input type="text" id="url" name="url" />
             <label for="token">
                 MISP Fleet Commander API Token
             </label>
             <input type="text" id="token" name="token" />
+            <label for="notify_if_server_not_found">
+                <input type="checkbox" id="notify_if_server_not_found" name="notify_if_server_not_found" />
+                Notify if MISP Server not found in fleets 
+            </label>
         </div>
 
         <div id="status" class="alert"></div>

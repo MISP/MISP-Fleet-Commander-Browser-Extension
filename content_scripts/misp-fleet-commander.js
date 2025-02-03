@@ -18,7 +18,7 @@
     browser.runtime.onMessage.addListener((message, sender, sendReponse) => {
         switch (message.command) {
             case 'notify':
-                showToat(message.payload.title, message.payload.message, message.payload.variant)
+                showToast(message.payload.title, message.payload.message, message.payload.variant)
                 break;
             case 'create-api-key':
                 createApiKey().then((APIKey) => {
@@ -68,21 +68,24 @@
         return await response.json()
     }
 
-    function showToat(title, message, variant) {
+    function showToast(title, message, variant) {
         const variantMappingBGHead = {
             'success': '#6ee7b7',
             'warning': '#fde047',
             'danger': '#fca5a5',
+            'info': '#bee5eb',
         }
         const variantMappingBGBody = {
             'success': '#dcfce7',
             'warning': '#fef9c3',
             'danger': '#fee2e2',
+            'info': '#d1ecf1',
         }
         const variantMappingBorder = {
             'success': '#4ade80',
             'warning': '#facc15',
             'danger': '#f87171',
+            'info': '#bee5eb',
         }
         const toastHTML = `
             <div style="position: absolute; top: 60px; right: 10px; border: 1px solid ${variantMappingBorder[variant]}; border-radius: 3px;">
@@ -97,7 +100,7 @@
         document.querySelector('body').append(div)
         setTimeout(() => {
             div.remove()
-        }, 5000);
+        }, 7000);
     }
 
 

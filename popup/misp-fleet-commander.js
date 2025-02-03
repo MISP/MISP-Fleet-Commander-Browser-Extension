@@ -4,6 +4,7 @@ if (typeof browser === "undefined") {
 
 let MISP_BASEURL = null
 let MFC_URL = null
+// let notify_if_server_not_found = null
 let token = null
 let last_selected_fleet = null
 const token_type = 'apikey'
@@ -18,13 +19,6 @@ async function getCurrentTab() {
 }
 
 window.onload = async () => {
-    const currentTab = await getCurrentTab()
-    await browser.scripting.executeScript({
-        target: {tabId: currentTab.id},
-        files: [
-            "/content_scripts/misp-fleet-commander.js"
-        ]
-    });
     initContext()
         .then(() => {
             startImport()
@@ -32,7 +26,6 @@ window.onload = async () => {
 }
 
 async function initContext() {
-    console.debug('Initializing context');
     document.getElementById('button-settings').addEventListener('click', function() {
         console.log('click');
         browser.runtime.openOptionsPage()
@@ -43,7 +36,6 @@ async function initContext() {
     MFC_URL = settings.MFM_baseurl
     token = settings.MFM_token
     last_selected_fleet = settings.last_selected_fleet
-
     MISP_BASEURL = new URL(tabs[0].url).origin
 }
 
@@ -95,8 +87,12 @@ async function populateImportOptions() {
         return
     }
     const fleetIDContainer = document.getElementById('fleet-container')
+    const fleetIDsContainingThisURL = fleets.filter((f) => { return f.servers.some((s) => s.url == MISP_BASEURL) }).map((f) => f.id)
     fleets.forEach((fleet, i) => {
         let fleetContainer = document.createElement("div")
+        fleetContainer.style['display'] = 'flex'
+        fleetContainer.style['align-items'] = 'center'
+        fleetContainer.style['margin'] = '0.5em 0'
         let fleetIDInput = document.createElement("input")
         setDOMAttributes(fleetIDInput, {
             type: 'radio',
@@ -104,6 +100,7 @@ async function populateImportOptions() {
             name: 'fleet_id',
             value: fleet.id,
         })
+        fleetIDInput['style']['margin-top'] = 0;
         if (fleet.id == last_selected_fleet) {
             fleetIDInput.checked = true
         }
@@ -115,8 +112,25 @@ async function populateImportOptions() {
         let fleetLabel = document.createElement("label")
         fleetLabel.setAttribute('for', fleet.id)
         fleetLabel.innerText = fleet.name
+        fleetLabel.style['font-weight'] = '600'
+
+        
         fleetContainer.appendChild(fleetIDInput)
         fleetContainer.appendChild(fleetLabel)
+
+        if (fleetIDsContainingThisURL.includes(fleet.id)) {
+            const fleetInfo = document.createElement("small")
+            fleetInfo.innerText = 'Found'
+            fleetInfo.style['display'] = 'inline-block'
+            fleetInfo.style['color'] = '#fff'
+            fleetInfo.style['background-color'] = '#dc3545'
+            fleetInfo.style['margin-left'] = '0.5em'
+            fleetInfo.style['font-size'] = '75%'
+            fleetInfo.style['font-weight'] = '700'
+            fleetInfo.style['padding'] = '0.2em'
+            fleetInfo.style['border-radius'] = '0.5em'
+            fleetContainer.appendChild(fleetInfo)
+        }
         fleetIDContainer.appendChild(fleetContainer)
 
         const importBtn = document.getElementById('enroll-server')
@@ -142,7 +156,6 @@ async function startImport() {
     let isMISP = false
     toggleLoading(true)
     try {
-        // isMISP = await checkIfMISP()
         isMISP = await sendMessage('check-if-MISP')
     } catch (error) {
         console.error(error);
@@ -265,7 +278,6 @@ async function addServer(fleetID, serverData) {
  */
 
 async function fetchInstanceInfo() {
-    // const fullApiKey = { AuthKey: { authkey_raw: 'qwertyuiop123456789' } }
     let fullApiKey
     try {
         fullApiKey = await createApiKey()
@@ -282,12 +294,6 @@ async function fetchInstanceInfo() {
         apiKey: fullApiKey.AuthKey.authkey_raw,
     }
     return data
-}
-
-async function checkIfMISP() {
-    const url = `${MISP_BASEURL}/css/action_table.css`
-    const response = await fetch(url)
-    return response.ok && !response.redirected
 }
 
 async function getUser() {
