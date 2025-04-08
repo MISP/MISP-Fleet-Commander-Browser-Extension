@@ -3,15 +3,13 @@
 
 **Enroll new MISP servers into Fleet Commander in just one click.**
 
----
-
 ## 🧭 Overview
 
 Enrolling new MISP servers into [MISP Fleet Commander](https://github.com/mokaddem/MISP-Fleet-Commander) can be a pain — generating API keys, manually copying URLs, and filling in details inside the application.
 
 This browser extension makes it effortless.
 
-With **one click**, the extension grabs the necessary information from the MISP server you're currently browsing and adds it directly to your Fleet Commander instance.
+With **one click**, the extension grabs the necessary information from the MISP server you're currently browsing and adds it **directly** to your Fleet Commander instance.
 
 ## ✅ Why Use This?
 
