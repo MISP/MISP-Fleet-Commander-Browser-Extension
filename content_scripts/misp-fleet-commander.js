@@ -100,7 +100,7 @@
         document.querySelector('body').append(div)
         setTimeout(() => {
             div.remove()
-        }, 7000);
+        }, 3000);
     }
 
 
