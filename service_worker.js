@@ -12,6 +12,11 @@
         if (changeInfo.status === 'complete') {
             getSettings().then(async (settings) => {
                 if (settings.notify_if_server_not_found) {
+                    const MISP_BASEURL = new URL(tab.url).origin
+                    const shouldNotify = await shouldNotifyServerNotFound(MISP_BASEURL, settings.notify_if_server_not_found_notification_timestamp)
+                    if (!shouldNotify) {
+                        return
+                    }
                     const fleetsContainThisURL = await checkIfFleetsContainThisURL(settings, tab);
                     if (fleetsContainThisURL.length == 0) {
                         sendMessage('notify', {
@@ -35,9 +40,38 @@
                     token: settings.MFM_token,
                     notify_if_server_not_found: settings.MFM_notify_if_server_not_found,
                     last_selected_fleet: settings.last_selected_fleet,
+                    notify_if_server_not_found_notification_timestamp: settings.notify_if_server_not_found_notification_timestamp,
                 })
             })
         });
+    }
+
+    async function setServerNotFoundNotificationCount(MISP_BASEURL, notify_if_server_not_found_notification_timestamp) {
+        const now = Date.now()
+        const updatedSetting = notify_if_server_not_found_notification_timestamp === undefined ? {} : notify_if_server_not_found_notification_timestamp
+        updatedSetting[MISP_BASEURL] = now
+        browser.storage.local.set({
+            notify_if_server_not_found_notification_timestamp: updatedSetting,
+        })
+    }
+
+    async function shouldNotifyServerNotFound(MISP_BASEURL, notify_if_server_not_found_notification_timestamp) {
+        if (
+            notify_if_server_not_found_notification_timestamp === undefined || 
+            notify_if_server_not_found_notification_timestamp[MISP_BASEURL] === undefined
+        ) {
+            setServerNotFoundNotificationCount(MISP_BASEURL, notify_if_server_not_found_notification_timestamp)
+            return true
+        }
+        const now = Date.now()
+        const notificationFreq = 1000 * 10 * 60 // 10min
+
+        if ((now - notify_if_server_not_found_notification_timestamp[MISP_BASEURL]) > notificationFreq) {
+            setServerNotFoundNotificationCount(MISP_BASEURL, notify_if_server_not_found_notification_timestamp)
+            return true
+        }
+        setServerNotFoundNotificationCount(MISP_BASEURL, notify_if_server_not_found_notification_timestamp)
+        return false
     }
 
     async function checkIfFleetsContainThisURL(settings, tab) {

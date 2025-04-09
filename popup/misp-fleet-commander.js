@@ -27,7 +27,6 @@ window.onload = async () => {
 
 async function initContext() {
     document.getElementById('button-settings').addEventListener('click', function() {
-        console.log('click');
         browser.runtime.openOptionsPage()
     })
     const tabs = await browser.tabs.query({currentWindow: true, active: true})
